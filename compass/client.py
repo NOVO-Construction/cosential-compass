@@ -55,7 +55,7 @@ class CompassClient(object):
             - resource: The resource to request (without shared prefix)
             - params: Any query parameters to send
             - data: Any data to send. If data is a dict, it will be encoded as json.
-            - headers: Any additional headers
+            - headers: Any ional headers
             - endpoint: The endpoint to use, f.ex. api or upload, defaults to api
             - auth: Authentication
             - **kwargs: Any additional arguments to pass to the request
