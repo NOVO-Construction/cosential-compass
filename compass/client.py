@@ -58,7 +58,7 @@ class CompassClient(object):
             - headers: Any additional headers
             - endpoint: The endpoint to use, f.ex. api or upload, defaults to api
             - auth: Authentication
-            - **kwargs: Any addiitonal arguments to pass to the request
+            - **kwargs: Any additional arguments to pass to the request
         """
         if isinstance(data, dict):
             data = json.dumps(data)

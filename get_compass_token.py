@@ -29,7 +29,7 @@ def main():
     print('Fetching user token from Cosential...')
     user_token = client.get_user_token(username=username, password=password, firm_id=firm_id, api_key=api_key)
     if user_token is None:
-        print('Cound not retieve user token.  Make sure your firm id, api key, username and password are correct')
+        print('Could not retrieve compass user token.  Make sure your firm id, api key, username and password are correct.')
         main()
     print("{0}'s user token is: {1}".format(username, user_token))
     sys.exit()
