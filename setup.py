@@ -12,6 +12,8 @@ INSTALL_REQUIRES = [
     'requests',
 ]
 
+SCRIPTS = ['get_user_token.py', 'get_user_token']
+
 setup(
     name='cosential-compass',
     version='1.2.8',
@@ -21,6 +23,7 @@ setup(
     description='Python client for Cosential Compass',
     long_description=__doc__,
     packages=find_packages(exclude=('tests', 'tests.*',)),
+    scripts=SCRIPTS,
     zip_safe=False,
     extras_require={
         'tests': TEST_REQUIRES,
