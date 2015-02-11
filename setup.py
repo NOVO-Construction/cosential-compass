@@ -16,7 +16,7 @@ SCRIPTS = ['get_compass_token.py', 'get_compass_token']
 
 setup(
     name='cosential-compass',
-    version='1.2.8',
+    version='0.0.1',
     author='NOVO Construction',
     author_email='skuehn@novoconstruction.com',
     url='https://github.com/NOVO-Construction/cosential-compass',
