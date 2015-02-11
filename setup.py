@@ -12,7 +12,7 @@ INSTALL_REQUIRES = [
     'requests',
 ]
 
-SCRIPTS = ['get_comapss_token.py', 'get_comapss_token']
+SCRIPTS = ['get_comapass_token.py', 'get_comapass_token']
 
 setup(
     name='cosential-compass',
