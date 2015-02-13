@@ -37,7 +37,7 @@ class CompassClient(object):
 
     def _check_for_errors(self, response):
         if not response.ok:
-            raise CompassClientException(response.status_code, response.text)
+            raise CompassClientException(response)
 
     @property
     def default_headers(self):
@@ -295,8 +295,15 @@ class CompassClient(object):
 
 class CompassClientException(Exception):
 
-    def __init__(self, status_code, message=None, **kwargs):
-        super(CompassClientException, self).__init__(message)
-        self.status_code = status_code
-        self.message = message
+    def __init__(self, response, **kwargs):
+        super(CompassClientException, self).__init__(response.text)
+        self.response = response
+        self.reason = response.reason
+        self.status_code = response.status_code
+        self.text = response.text
         self.__dict__.update(kwargs)
+
+    def __str__(self):
+        if self.text:
+            return "{0}: {1} - {2}".format(self.status_code, self.reason, self.text)
+        return "{0}: {1}".format(self.status_code, self.reason)

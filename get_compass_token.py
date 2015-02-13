@@ -34,7 +34,7 @@ def main():
     try:
         user_token = client.get_user_token(username=username, password=password, firm_id=firm_id, api_key=api_key, **kwargs)
     except CompassClientException as e:
-        print("{0}: {1}".format(e.status_code, e.message))
+        print(e)
         sys.exit()
     if user_token is None:
         print('Could not retrieve compass user token.  Make sure your firm id, api key, username and password are correct.')
