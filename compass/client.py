@@ -11,11 +11,12 @@ BATCH_SIZE = 250
 
 class CompassClient(object):
 
-    def __init__(self, compass_token=None, debug=False):
+    def __init__(self, compass_token=None, debug=False, test=False):
         """
         Args:
             - compass_token: an access_token string
         """
+        self.test = test
         self.compass_token = compass_token
         if debug:
             # These two lines enable debugging at httplib level (requests->urllib3->http.client)
@@ -31,7 +32,7 @@ class CompassClient(object):
             # You must initialize logging, otherwise you'll not see debug output.
             logging.basicConfig()
             logging.getLogger().setLevel(logging.DEBUG)
-            requests_log = logging.getLogger("requests.packages.urllib3")
+            requests_log = logging.getLogger('requests.packages.urllib3')
             requests_log.setLevel(logging.DEBUG)
             requests_log.propagate = True
 
@@ -67,7 +68,10 @@ class CompassClient(object):
             headers.update(self.default_headers)
         else:
             headers = self.default_headers
-        url = 'https://%s.cosential.com/api/%s' % (endpoint, resource)
+        if self.test:
+            url = 'https://%s.uat.cosential.com/api/%s' % (endpoint, resource)
+        else:
+            url = 'https://%s.cosential.com/api/%s' % (endpoint, resource)
         response = requests.request(method, url, params=params, data=data, headers=headers, **kwargs)
         self._check_for_errors(response)
         return response
@@ -76,13 +80,16 @@ class CompassClient(object):
     def get_user(self):
         return self._request('get', 'user/').json()
 
-    def get_user_token(self, username=None, password=None, firm_id=None, api_key=None):
+    def get_user_token(self, username=None, password=None, firm_id=None, api_key=None, debug=False, test=False):
         auth = HTTPBasicAuth(username, password)
         headers = {
             'x-compass-firm-id': firm_id,
             'x-compass-api-key': api_key,
         }
-        url = 'https://compass.cosential.com/api/user/'
+        if test:
+            url = 'https://compass.uat.cosential.com/api/user/'
+        else:
+            url = 'https://compass.cosential.com/api/user/'
         response = requests.request('get', url, auth=auth, headers=headers)
         if not response.ok:
             return None
