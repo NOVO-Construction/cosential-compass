@@ -2,9 +2,7 @@ import argparse
 import sys
 from getpass import getpass
 
-from compass import CompassClient
-
-client = CompassClient()
+from compass import CompassClient, CompassClientException
 
 
 def main():
@@ -29,7 +27,15 @@ def main():
     if not password:
         password = getpass(prompt='Enter password for {0}: '.format(username))
     print('Fetching user token from Cosential...')
-    user_token = client.get_user_token(username=username, password=password, firm_id=firm_id, api_key=api_key, debug=args.debug, test=args.test)
+    client = CompassClient()
+    kwargs = {}
+    if args.test:
+        kwargs['endpoint'] = 'compass.uat'
+    try:
+        user_token = client.get_user_token(username=username, password=password, firm_id=firm_id, api_key=api_key, **kwargs)
+    except CompassClientException as e:
+        print("{0}: {1}".format(e.status_code, e.message))
+        sys.exit()
     if user_token is None:
         print('Could not retrieve compass user token.  Make sure your firm id, api key, username and password are correct.')
         main()

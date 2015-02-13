@@ -11,12 +11,11 @@ BATCH_SIZE = 250
 
 class CompassClient(object):
 
-    def __init__(self, compass_token=None, debug=False, test=False):
+    def __init__(self, compass_token=None, debug=False):
         """
         Args:
             - compass_token: an access_token string
         """
-        self.test = test
         self.compass_token = compass_token
         if debug:
             # These two lines enable debugging at httplib level (requests->urllib3->http.client)
@@ -68,10 +67,7 @@ class CompassClient(object):
             headers.update(self.default_headers)
         else:
             headers = self.default_headers
-        if self.test:
-            url = 'https://%s.uat.cosential.com/api/%s' % (endpoint, resource)
-        else:
-            url = 'https://%s.cosential.com/api/%s' % (endpoint, resource)
+        url = 'https://%s.cosential.com/api/%s' % (endpoint, resource)
         response = requests.request(method, url, params=params, data=data, headers=headers, **kwargs)
         self._check_for_errors(response)
         return response
@@ -80,17 +76,13 @@ class CompassClient(object):
     def get_user(self):
         return self._request('get', 'user/').json()
 
-    def get_user_token(self, username=None, password=None, firm_id=None, api_key=None, debug=False, test=False):
+    def get_user_token(self, username=None, password=None, firm_id=None, api_key=None, endpoint='compass'):
         auth = HTTPBasicAuth(username, password)
         headers = {
             'x-compass-firm-id': firm_id,
             'x-compass-api-key': api_key,
         }
-        if test:
-            url = 'https://compass.uat.cosential.com/api/user/'
-        else:
-            url = 'https://compass.cosential.com/api/user/'
-        response = requests.request('get', url, auth=auth, headers=headers)
+        response = self._request('get', 'user/', auth=auth, headers=headers, endpoint=endpoint)
         if not response.ok:
             return None
         return response.json()[0].get('UserToken')
