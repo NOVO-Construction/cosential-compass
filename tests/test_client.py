@@ -43,11 +43,11 @@ class TestClient(unittest.TestCase):
     def test_handle_error(self):
         client = CompassClient('my_token')
 
-        # unknown code
         with self.assertRaises(CompassClientException) as expected_exception:
-            client._check_for_errors(mocked_response('something terrible', status_code=599))
+            client._check_for_errors(mocked_response('something terrible', status_code=599, reason='because'))
         self.assertEqual(599, expected_exception.exception.status_code)
         self.assertEqual('something terrible', expected_exception.exception.message)
+        self.assertEqual('because', expected_exception.exception.reason)
 
     def test_get(self):
         client = self.make_client('get', 'foo', params={'arg': 'value'}, bar=1)
