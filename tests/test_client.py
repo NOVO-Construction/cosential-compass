@@ -46,7 +46,7 @@ class TestClient(unittest.TestCase):
         with self.assertRaises(CompassClientException) as expected_exception:
             client._check_for_errors(mocked_response('something terrible', status_code=599, reason='because'))
         self.assertEqual(599, expected_exception.exception.status_code)
-        self.assertEqual('something terrible', expected_exception.exception.message)
+        self.assertEqual('something terrible', expected_exception.exception.text)
         self.assertEqual('because', expected_exception.exception.reason)
 
     def test_get(self):
