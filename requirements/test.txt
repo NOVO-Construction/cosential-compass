@@ -1,4 +1,0 @@
-coverage
-flexmock
-nose
-unittest2

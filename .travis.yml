@@ -5,12 +5,8 @@ python:
   - "3.4"
 
 install:
-  - pip install coveralls
-  - python setup.py -q install
+  - pip install -e .[tests] -q
 
 # command to run tests
 script:
-  - coverage run --source=compass setup.py test
-
-after_success:
-  coveralls
+  - nosetests
