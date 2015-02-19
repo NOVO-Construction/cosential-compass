@@ -1,11 +1,9 @@
 #!/usr/bin/env python
-from setuptools import find_packages, setup
+from setuptools import setup, find_packages
 
 TEST_REQUIRES = [
-    'coverage',
     'flexmock',
     'nose',
-    'unittest2',
 ]
 
 INSTALL_REQUIRES = [
