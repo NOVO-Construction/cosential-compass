@@ -1,7 +1,7 @@
 import json
+import unittest
 
 import requests
-import unittest2 as unittest
 from flexmock import flexmock
 
 from compass import CompassClient, CompassClientException
