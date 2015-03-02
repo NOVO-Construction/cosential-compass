@@ -32,7 +32,7 @@ class TestClient(unittest.TestCase):
             .with_args(method,
                        'https://%s.cosential.com/api/%s' % (endpoint, resource),
                        params=params,
-                       data=json.dumps(data),
+                       data=data,
                        headers=headers,
                        **kwargs)
             .and_return(mocked_response(result))
