@@ -163,7 +163,7 @@ class CompassClient(object):
     def create_company(self, company):
         return self._request('post', 'companies/', data=json.dumps([company])).json()
 
-    # Company methods
+    # Contact methods
     def get_contact_schema(self):
         return self._request('get', 'contacts/schema/').json()
 
