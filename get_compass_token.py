@@ -27,12 +27,12 @@ def main():
     if not password:
         password = getpass(prompt='Enter password for {0}: '.format(username))
     print('Fetching user token from Cosential...')
-    client = CompassClient()
-    kwargs = {}
     if args.test:
-        kwargs['endpoint'] = 'compass.uat'
+        client = CompassClient(endpoint='compass.uat')
+    else:
+        client = CompassClient()
     try:
-        user_token = client.get_user_token(username=username, password=password, firm_id=firm_id, api_key=api_key, **kwargs)
+        user_token = client.get_user_token(username=username, password=password, firm_id=firm_id, api_key=api_key)
     except CompassClientException as e:
         print(e)
         sys.exit()

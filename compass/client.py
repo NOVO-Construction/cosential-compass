@@ -11,11 +11,12 @@ BATCH_SIZE = 250
 
 class CompassClient(object):
 
-    def __init__(self, compass_token=None, debug=False):
+    def __init__(self, compass_token=None, endpoint='compass', debug=False):
         """
         Args:
             - compass_token: an access_token string
         """
+        self.endpoint = endpoint
         self.compass_token = compass_token
         if debug:
             # These two lines enable debugging at httplib level (requests->urllib3->http.client)
@@ -45,7 +46,7 @@ class CompassClient(object):
             'x-compass-token': '{0}'.format(self.compass_token)
         }
 
-    def _request(self, method, resource, params=None, data=None, headers=None, endpoint='compass', **kwargs):
+    def _request(self, method, resource, params=None, data=None, headers=None, **kwargs):
         """
         Performs a HTTP request to Compass.
         This method adds authentication headers, and performs error checking on the response.
@@ -56,7 +57,6 @@ class CompassClient(object):
             - params: Any query parameters to send
             - data: Any data to send. If data is a dict, it will be encoded as json.
             - headers: Any ional headers
-            - endpoint: The endpoint to use, f.ex. api or upload, defaults to api
             - auth: Authentication
             - **kwargs: Any additional arguments to pass to the request
         """
@@ -67,7 +67,7 @@ class CompassClient(object):
             headers.update(self.default_headers)
         else:
             headers = self.default_headers
-        url = 'https://%s.cosential.com/api/%s' % (endpoint, resource)
+        url = 'https://%s.cosential.com/api/%s' % (self.endpoint, resource)
         response = requests.request(method, url, params=params, data=data, headers=headers, **kwargs)
         self._check_for_errors(response)
         return response
@@ -76,13 +76,13 @@ class CompassClient(object):
     def get_user(self):
         return self._request('get', 'user/').json()
 
-    def get_user_token(self, username=None, password=None, firm_id=None, api_key=None, endpoint='compass'):
+    def get_user_token(self, username=None, password=None, firm_id=None, api_key=None):
         auth = HTTPBasicAuth(username, password)
         headers = {
             'x-compass-firm-id': firm_id,
             'x-compass-api-key': api_key,
         }
-        response = self._request('get', 'user/', auth=auth, headers=headers, endpoint=endpoint)
+        response = self._request('get', 'user/', auth=auth, headers=headers)
         if not response.ok:
             return None
         return response.json()[0].get('UserToken')
