@@ -163,6 +163,14 @@ class CompassClient(object):
     def create_company(self, company):
         return self._request('post', 'companies/', data=json.dumps([company])).json()
 
+    # Company type
+    def get_company_type_list(self, limit=DEFAULT_LIMIT, offset=0):
+        params = {
+            'size': limit,
+            'from': offset,
+        }
+        return self._request('get', 'companies/companytypes/', params).json()
+
     # Contact methods
     def get_contact_schema(self):
         return self._request('get', 'contacts/schema/').json()
@@ -259,7 +267,7 @@ class CompassClient(object):
     def create_project(self, project):
         return self._request('post', 'projects/', data=json.dumps([project])).json()
 
-    # Company methods
+    # Opportunity methods
     def get_opportunity_schema(self):
         return self._request('get', 'opportunities/schema/').json()
 
