@@ -69,7 +69,7 @@ class CompassClient(object):
         else:
             headers = self.default_headers
         url = 'https://%s.cosential.com/api/%s' % (self.endpoint, resource)
-        response = requests.request(method, url, params=params, data=data, headers=headers, **kwargs)
+        response = requests.request(method, url, params=params, data=json.dumps(data), headers=headers, **kwargs)
         self._check_for_errors(response)
         return response
 
