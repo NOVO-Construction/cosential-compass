@@ -43,6 +43,7 @@ class CompassClient(object):
     @property
     def default_headers(self):
         return {
+            'Content-Type': 'application/json',
             'x-compass-token': '{0}'.format(self.compass_token)
         }
 
