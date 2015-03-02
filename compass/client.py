@@ -287,11 +287,11 @@ class CompassClient(object):
             if not page:
                 break
 
-    def update_opportunity(self, project):
-        return self._request('put', 'opportunities/{0}/'.format(project.get('OpportunityId')), data=project).json()
+    def update_opportunity(self, opportunity):
+        return self._request('put', 'opportunities/{0}/'.format(opportunity.get('OpportunityId')), data=opportunity).json()
 
-    def create_opportunity(self, project):
-        return self._request('post', 'opportunities/', data=project).json()
+    def create_opportunity(self, opportunity):
+        return self._request('post', 'opportunities/', data=json.dumps([opportunity])).json()
 
 
 class CompassClientException(Exception):
