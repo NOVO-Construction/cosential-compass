@@ -160,7 +160,7 @@ class CompassClient(object):
         return self._request('put', 'companies/{0}/'.format(company.get('CompanyId')), data=company).json()
 
     def create_company(self, company):
-        return self._request('put', 'companies/', data=company).json()
+        return self._request('post', 'companies/', data=company).json()
 
     # Company methods
     def get_contact_schema(self):
@@ -214,7 +214,7 @@ class CompassClient(object):
         return self._request('put', 'contacts/{0}/'.format(contact.get('ContactId')), data=contact).json()
 
     def create_contact(self, contact):
-        return self._request('put', 'contacts/', data=contact).json()
+        return self._request('post', 'contacts/', data=contact).json()
 
     # Project methods
     def get_project_schema(self):
@@ -256,7 +256,7 @@ class CompassClient(object):
         return self._request('put', 'projects/{0}/'.format(project.get('ProjectId')), data=project).json()
 
     def create_project(self, project):
-        return self._request('put', 'projects/', data=project).json()
+        return self._request('post', 'projects/', data=project).json()
 
     # Company methods
     def get_opportunity_schema(self):
@@ -290,7 +290,7 @@ class CompassClient(object):
         return self._request('put', 'opportunities/{0}/'.format(project.get('OpportunityId')), data=project).json()
 
     def create_opportunity(self, project):
-        return self._request('put', 'opportunities/', data=project).json()
+        return self._request('post', 'opportunities/', data=project).json()
 
 
 class CompassClientException(Exception):
